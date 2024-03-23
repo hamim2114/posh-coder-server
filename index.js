@@ -36,7 +36,7 @@ app.listen(5000, () => {
 });
 connect();
 
-app.use(cors({origin: ['http://localhost:4000','https://posh-coder-server.vercel.app'], credentials: true}));
+app.use(cors({origin: ['http://localhost:4000','https://posh-coder-admin.vercel.app'], credentials: true}));
 app.use(express.json());
 app.use(cookieParser());
 
