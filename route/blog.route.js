@@ -10,12 +10,12 @@ import { verifyToken } from '../middlewere/verify.token.js';
 
 export const blogRoute = express.Router();
 
-blogRoute.post('/', verifyToken, createBlog);
+blogRoute.post('/create', verifyToken, createBlog);
 
-blogRoute.get('/', getBlog);
+blogRoute.get('/getAll', getBlog);
 
-blogRoute.put('/:blogId',verifyToken, updateBlog);
+blogRoute.put('/edit/:blogId',verifyToken, updateBlog);
 
-blogRoute.get('/:blogId', getSingleBlog);
+blogRoute.get('/single/:blogId', getSingleBlog);
 
-blogRoute.delete('/:blogId',verifyToken, deleteBlog);
+blogRoute.delete('/delete/:blogId',verifyToken, deleteBlog);

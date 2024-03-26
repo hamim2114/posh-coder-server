@@ -1,8 +1,8 @@
 import mongoose, { Schema } from "mongoose";
 
-const GallerySchema = new Schema(
+const TrustBy = new Schema(
   {
-    image: {
+    imgUrl: {
       type: String,
       required: true
     },
@@ -13,4 +13,4 @@ const GallerySchema = new Schema(
   },{timestamps: true}
 );
 
-export default mongoose.model('Gallery', GallerySchema);
+export default mongoose.model('TrustBy', TrustBy);

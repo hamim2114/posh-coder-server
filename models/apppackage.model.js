@@ -1,22 +1,20 @@
 import mongoose, {Schema} from 'mongoose';
 
-const TeamSchema = new Schema(
+const ApppackageSchema = new Schema(
   {
-    imgUrl: {
-      type: String,
-    },
-    imgId: {
-      type: String,
-    },
     name: {
       type: String,
       required: true,
     },
-    title: {
+    price: {
       type: String,
       required: true,
+    },
+    details: {
+      type: Array,
+      required: true
     }
   },
   {timestamps: true}
 );
-export default mongoose.model('Team', TeamSchema);
+export default mongoose.model('AppPackage', ApppackageSchema);

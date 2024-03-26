@@ -1,20 +1,22 @@
 import mongoose, {Schema} from 'mongoose';
 
-const BlogSchema = new Schema(
+const GraphicTemplateSchema = new Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true,
     },
-    category:{
+    category: {
       type: String,
       required: true,
     },
-    body: {
+    imgUrl: {
       type: String,
-      required: true,
+    },
+    imgId: {
+      type: String,
     },
   },
   {timestamps: true}
 );
-export default mongoose.model('Blog', BlogSchema);
+export default mongoose.model('GraphicTemplate', GraphicTemplateSchema);

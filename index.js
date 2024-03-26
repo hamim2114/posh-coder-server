@@ -6,8 +6,15 @@ import cookieParser from 'cookie-parser';
 import Multer from 'multer';
 import { adminRoute } from './route/admin.route.js';
 import { webpackageRoute } from './route/webpackage.route.js';
-import { webtamplateRoute } from './route/webtamplate.route.js';
+import { webtemplateRoute } from './route/webtemplate.route.js';
 import { handleDelete, handleUpload } from './utils/fileUploadHandler.js';
+import { apppackageRoute } from './route/apppackage.route.js';
+import { appTemplateRoute } from './route/apptemplate.route.js';
+import { graphicPackageRoute } from './route/graphicpackage.route.js';
+import { graphicTemplateRoute } from './route/graphictemplate.route.js';
+import { teamRoute } from './route/team.route.js';
+import { blogRoute } from './route/blog.route.js';
+import { trustbyRoute } from './route/trustby.route.js';
 
 const app = express();
 
@@ -56,13 +63,21 @@ const upload = Multer({
   storage,
 });
 
-
+// Routes
+app.use('/api/admin', adminRoute);
+app.use('/api/webpackage', webpackageRoute);
+app.use('/api/apppackage', apppackageRoute);
+app.use('/api/webtemplate', webtemplateRoute);
+app.use('/api/apptemplate', appTemplateRoute);
+app.use('/api/graphicpackage', graphicPackageRoute);
+app.use('/api/graphictemplate', graphicTemplateRoute);
+app.use('/api/team', teamRoute);
+app.use('/api/blog', blogRoute);
+app.use('/api/trustby', trustbyRoute)
 app.post("/api/file/upload", upload.single("my_file"), handleUpload);
 app.post('/api/file/delete', handleDelete);
-app.use('/api/admin', adminRoute);
-app.use('/api/webpackage', webpackageRoute)
-app.use('/api/webtamplate', webtamplateRoute)
 
+// Error Catch Route
 app.use((err, req, res, next) => {
   const status = err.status || 500;
   const message = err.message || 'Something went Wrong!';

@@ -1,8 +1,8 @@
-import webtamplateModel from "../models/webtamplate.model.js";
+import webtemplateModel from "../models/webtemplate.model.js";
 
 export const createWebtamplate = async (req,res,next) => {
   try {
-    const newWebtamplate =  new webtamplateModel(req.body)
+    const newWebtamplate =  new webtemplateModel(req.body)
     const savedWebtamplate = await newWebtamplate.save();
     res.status(201).send(savedWebtamplate)
   } catch (error) {
@@ -23,7 +23,7 @@ export const createWebtamplate = async (req,res,next) => {
 
 export const getWebtamplate = async (req,res,next) => {
   try {
-    const allWebtamplate = await webtamplateModel.find();
+    const allWebtamplate = await webtemplateModel.find();
     res.status(201).send(allWebtamplate);
   } catch (error) {
     next(error)
@@ -32,8 +32,8 @@ export const getWebtamplate = async (req,res,next) => {
 
 export const deleteWebtamplate = async (req,res,next) => {
   try {
-    await webtamplateModel.findByIdAndDelete(req.params.id);
-    res.status(201).send('Webtamplate Deleted!')
+    await webtemplateModel.findByIdAndDelete(req.params.id);
+    res.status(201).send('Web Template Deleted!')
   } catch (error) {
     next(error)
   }

@@ -40,7 +40,6 @@ async function handleDelete(req, res) {
       res.status(400).json({ success: false, message: 'Image deletion failed' });
     }
   } catch (error) {
-    console.error(error);
     res.status(500).json({ success: false, message: 'Something went wrong' });
   }
 }

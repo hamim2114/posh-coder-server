@@ -9,9 +9,21 @@ export const createTeam = async (req,res,next) => {
       next(error)
     }
 };
+
+
+export const editTeams = async (req,res,next) => {
+    try {
+      const u = await teamModel.findByIdAndUpdate(req.params.id, {
+        $set: req.body
+      }, {new: true});
+      res.status(201).send(u);
+    } catch (error) {
+      next(error)
+    }
+};
 export const getTeams = async (req,res,next) => {
     try {
-      const teams = await teamModel.find().sort({createdAt: -1});
+      const teams = await teamModel.find();
       res.status(201).send(teams);
     } catch (error) {
       next(error)

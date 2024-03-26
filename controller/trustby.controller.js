@@ -1,8 +1,8 @@
-import galleryModel from '../models/gallery.model.js';
+import trustbyModel from "../models/trustby.model.js";
 
 export const createImg = async (req, res, next) => {
   try {
-    const newImg = new galleryModel(req.body);
+    const newImg = new trustbyModel(req.body);
     await newImg.save();
     res.status(201).send('Image Uploaded!');
   } catch (error) {
@@ -11,7 +11,7 @@ export const createImg = async (req, res, next) => {
 };
 export const getImgs = async (req, res, next) => {
   try {
-    const images = await galleryModel.find().sort({createdAt: -1});
+    const images = await trustbyModel.find();
     res.status(201).send(images);
   } catch (error) {
     next(error);
@@ -19,7 +19,7 @@ export const getImgs = async (req, res, next) => {
 };
 export const deleteImg = async (req, res, next) => {
   try {
-    await galleryModel.findByIdAndDelete(req.params.id)
+    await trustbyModel.findByIdAndDelete(req.params.id)
     res.status(201).send('Image Deleted!');
   } catch (error) {
     next(error);
