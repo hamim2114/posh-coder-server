@@ -10,16 +10,16 @@ export const createGraphicTemplate = async (req,res,next) => {
   }
 };
 
-// export const updateGraphictamplate = async (req,res,next) => {
-//   try {
-//     const updatedGraphictamplate = await blogModel.findByIdAndUpdate(req.params.blogId, {
-//       $set: req.body
-//     }, {new: true});
-//     res.status(201).send(updatedGraphictamplate)
-//   } catch (error) {
-//     next(error)
-//   }
-// }
+export const updateGraphictamplate = async (req,res,next) => {
+  try {
+    const updatedGraphictamplate = await graphictemplateModel.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    }, {new: true});
+    res.status(201).send(updatedGraphictamplate)
+  } catch (error) {
+    next(error)
+  }
+}
 
 export const getGraphicTemplate = async (req,res,next) => {
   try {
