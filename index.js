@@ -45,7 +45,7 @@ app.use(cors({
     'http://localhost:4000',
     'http://localhost:3002',
     'https://admin.poshcoder.com',
-    'https://poshcoder.com'
+    'https://www.poshcoder.com'
   ], credentials: true
 }));
 app.use(express.json());
