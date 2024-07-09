@@ -15,7 +15,7 @@ export const sendVerificationEmail = async (email, token) => {
     to: email,
     subject: 'Posh Coder Email Verification',
     text: `Please verify your email by clicking the following link: 
-    https://server.poshcoder.com/verify-email?token=${token}`
+    https://www.poshcoder.com/verify-email?token=${token}`
   };
 
   await transporter.sendMail(mailOptions);
