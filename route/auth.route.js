@@ -1,13 +1,15 @@
 import express from 'express';
-import { handleLogin, handleLogout, handleReg, handleVerify } from '../controller/auth.controller.js';
+import { getUserInfo, handleLogin, handleLogout, handleReg, verifyEmail } from '../controller/auth.controller.js';
 import { verifyToken } from '../middlewere/verify.token.js';
 
 export const authRoute = express.Router();
 
+authRoute.post('/register', handleReg);
+
 authRoute.post('/login', handleLogin);
 
-authRoute.get('/verify', verifyToken, handleVerify)
+authRoute.post('/verify-email', verifyEmail);
+
+authRoute.get('/me', verifyToken, getUserInfo);
 
 authRoute.post('/logout', handleLogout);
-
-authRoute.post('/register', handleReg);

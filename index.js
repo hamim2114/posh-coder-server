@@ -15,17 +15,14 @@ import { graphicTemplateRoute } from './route/graphictemplate.route.js';
 import { teamRoute } from './route/team.route.js';
 import { blogRoute } from './route/blog.route.js';
 import { trustbyRoute } from './route/trustby.route.js';
+import { authRoute } from './route/auth.route.js';
 
 const app = express();
 
 dotenv.config();
 
 const connect = async () => {
-  try {
     await mongoose.connect(process.env.MONGODB_URI);
-  } catch (error) {
-    throw error;
-  }
 };
 
 mongoose.connection.on('connected', () => {
@@ -43,7 +40,7 @@ app.listen(5000, () => {
 });
 connect();
 
-app.use(cors({origin: ['http://localhost:4000','https://posh-coder-admin.vercel.app'], credentials: true}));
+app.use(cors({origin: ['http://localhost:4000','http://localhost:3002','https://posh-coder-admin.vercel.app'], credentials: true}));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -65,6 +62,7 @@ const upload = Multer({
 
 // Routes
 app.use('/api/admin', adminRoute);
+app.use('/api/auth', authRoute);
 app.use('/api/webpackage', webpackageRoute);
 app.use('/api/apppackage', apppackageRoute);
 app.use('/api/webtemplate', webtemplateRoute);
