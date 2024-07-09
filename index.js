@@ -22,7 +22,7 @@ const app = express();
 dotenv.config();
 
 const connect = async () => {
-    await mongoose.connect(process.env.MONGODB_URI);
+  await mongoose.connect(process.env.MONGODB_URI);
 };
 
 mongoose.connection.on('connected', () => {
@@ -40,7 +40,14 @@ app.listen(5000, () => {
 });
 connect();
 
-app.use(cors({origin: ['http://localhost:4000','http://localhost:3002','https://posh-coder-admin.vercel.app'], credentials: true}));
+app.use(cors({
+  origin: [
+    'http://localhost:4000',
+    'http://localhost:3002',
+    'https://admin.poshcoder.com',
+    'https://poshcoder.com'
+  ], credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 
