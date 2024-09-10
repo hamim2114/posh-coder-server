@@ -17,6 +17,10 @@ const AuthSchema = new Schema(
       trim: true,
       match: [/.+@.+\..+/, 'Please enter a valid email address'] // Optional: Email validation
     },
+    phone: {
+      type: Number,
+      required: true,
+    },
     password: {
       type: String,
       required: true

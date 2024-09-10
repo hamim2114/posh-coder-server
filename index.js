@@ -16,6 +16,7 @@ import { teamRoute } from './route/team.route.js';
 import { blogRoute } from './route/blog.route.js';
 import { trustbyRoute } from './route/trustby.route.js';
 import { authRoute } from './route/auth.route.js';
+import { orderRoute } from './route/order.route.js';
 
 const app = express();
 
@@ -70,6 +71,7 @@ const upload = Multer({
 // Routes
 app.use('/api/admin', adminRoute);
 app.use('/api/auth', authRoute);
+app.use('/api/order', orderRoute);
 app.use('/api/webpackage', webpackageRoute);
 app.use('/api/apppackage', apppackageRoute);
 app.use('/api/webtemplate', webtemplateRoute);
