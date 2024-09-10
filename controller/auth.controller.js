@@ -3,8 +3,8 @@ import { createError } from '../utils/error.handler.js';
 import authModel from '../models/auth.model.js';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import { sendVerificationEmail } from '../utils/emailVerify.js';
 import mongoose from 'mongoose';
+import { sendVerificationEmail } from '../utils/emailSend.js';
 
 export const handleReg = async (req, res, next) => {
   const { username, email,phone, password } = req.body;
@@ -120,7 +120,7 @@ export const getUsers = async (req, res, next) => {
     }
     const userData = await authModel
       .find(filter)
-      .sort({ updatedAt: -1 });
+      .sort({ createdAt: -1 });
 
     res.status(200).json(userData);
   } catch (error) {

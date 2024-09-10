@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import orderModel from "../models/order.model.js";
 import { createError } from "../utils/error.handler.js";
 import authModel from "../models/auth.model.js";
+import { sendOrderCreateEmail, sendUserOrderConfirmationEmail } from "../utils/emailSend.js";
 
 
 // Place a new order
@@ -26,6 +27,12 @@ export const createOrder = async (req, res,next) => {
     });
 
     const savedOrder = await newOrder.save();
+
+    // Send email notification to admin
+    await sendOrderCreateEmail(savedOrder);
+
+    //send order confirmation to user
+    await sendUserOrderConfirmationEmail(savedOrder)
 
     return res.status(201).json({
       message: 'Order placed successfully',
