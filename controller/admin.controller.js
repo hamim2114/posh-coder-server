@@ -26,13 +26,13 @@ export const handleAdminLogin = async (req, res, next) => {
     const token = jwt.sign({id: admin._id,name: admin.name, role: admin.role}, process.env.JWT_SECRET, {expiresIn: '7d'});
     const {password, ...others} = admin._doc;
     res
-      .cookie('poshcoder', token, {
+      .cookie('poshcoder_admin', token, {
         httpOnly: true,
         sameSite: 'none',
         secure: true,
       })
       .status(200)
-      .send(others);
+      .send(token);
   } catch (error) {
     next(error);
   }
@@ -48,7 +48,7 @@ export const handleAdminVerify = (req,res,next) => {
 
 export const handleAdminLogout = (req,res,next) => {
   res
-    .clearCookie('poshcoder', {
+    .clearCookie('poshcoder_admin', {
       sameSite: 'none',
       secure: true,
     })

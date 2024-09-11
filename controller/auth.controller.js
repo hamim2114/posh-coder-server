@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import mongoose from 'mongoose';
 import { sendVerificationEmail } from '../utils/emailSend.js';
+import orderModel from '../models/order.model.js';
 
 export const handleReg = async (req, res, next) => {
   const { username, email,phone, password } = req.body;
@@ -100,7 +101,7 @@ export const handleLogin = async (req, res, next) => {
         secure: true,
       })
       .status(200)
-      .send(others); // Sending user details without password
+      .send(token); // Sending user details without password
   } catch (error) {
     next(error);
   }
@@ -109,24 +110,40 @@ export const handleLogin = async (req, res, next) => {
 // get all users
 export const getUsers = async (req, res, next) => {
   const { status, search } = req.query;
-  try {
-    const filter = status && status !== 'all' ? { status } : {};
-    if (search) {
-        const searchRegex = new RegExp(search, 'i'); // Case-insensitive regex
-        filter.$or = [
-          { username: { $regex: searchRegex } }, 
-          { email: { $regex: searchRegex } }
-        ];
-    }
-    const userData = await authModel
-      .find(filter)
-      .sort({ createdAt: -1 });
 
-    res.status(200).json(userData);
+  try {
+    // Building filter based on status and search query
+    const filter = status && status !== 'all' ? { status } : {};
+
+    if (search) {
+      const searchRegex = new RegExp(search, 'i'); // Case-insensitive regex
+      filter.$or = [
+        { username: { $regex: searchRegex } },
+        { email: { $regex: searchRegex } }
+      ];
+    }
+
+    // Fetch users based on the filter
+    const users = await authModel.find(filter).sort({ createdAt: -1 });
+
+    // Fetch orders for each user
+    const usersWithOrders = await Promise.all(
+      users.map(async (user) => {
+        const userOrders = await orderModel.find({ "user._id": user._id });
+        return {
+          ...user.toObject(), // Convert Mongoose document to plain JS object
+          orders: userOrders
+        };
+      })
+    );
+
+    // Return the user data along with their orders
+    res.status(200).json(usersWithOrders);
   } catch (error) {
     next(error);
   }
 };
+
 
 export const getUser = async (req,res,next) => {
   try {
@@ -185,11 +202,18 @@ export const getUserInfo = async (req, res, next) => {
     if (!user) {
       return next(createError(404, 'User not found.'));
     }
-    res.status(200).json(user);
+    const userOrders = await orderModel.find({ userId: user._id });
+    const userWithOrders = user.toObject();
+
+    userWithOrders.orders = userOrders;
+
+    res.status(200).json(userWithOrders);
   } catch (error) {
     next(error);
   }
 };
+
+
 
 export const handleLogout = (req, res, next) => {
   res
