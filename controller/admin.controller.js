@@ -26,13 +26,16 @@ export const handleAdminLogin = async (req, res, next) => {
     const token = jwt.sign({id: admin._id,name: admin.name, role: admin.role}, process.env.JWT_SECRET, {expiresIn: '7d'});
     const {password, ...others} = admin._doc;
     res
-      .cookie('poshcoder_admin', token, {
-        httpOnly: true,
-        sameSite: 'none',
-        secure: true,
-      })
+      // .cookie('poshcoder_admin', token, {
+      //   httpOnly: true,
+      //   sameSite: 'none',
+      //   secure: true,
+      // })
       .status(200)
-      .send(token);
+      .send({
+        jwt: token,
+        message: 'Login success'
+      });
   } catch (error) {
     next(error);
   }
