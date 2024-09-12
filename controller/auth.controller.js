@@ -96,11 +96,11 @@ export const handleLogin = async (req, res, next) => {
     const { password:_, ...others } = user._doc;
 
     res
-      // .cookie('poshcoder', token, {
-      //   httpOnly: true,
-      //   sameSite: 'none',
-      //   secure: true,
-      // })
+      .cookie('poshcoder', token, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+      })
       .status(200)
       .send({
         jwt: token,
