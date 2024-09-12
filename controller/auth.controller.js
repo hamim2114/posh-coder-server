@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import jwt from 'jsonwebtoken';
 import { createError } from '../utils/error.handler.js';
 import authModel from '../models/auth.model.js';
@@ -95,13 +96,16 @@ export const handleLogin = async (req, res, next) => {
     const { password:_, ...others } = user._doc;
 
     res
-      .cookie('poshcoder', token, {
-        httpOnly: true,
-        sameSite: 'none',
-        secure: true,
-      })
+      // .cookie('poshcoder', token, {
+      //   httpOnly: true,
+      //   sameSite: 'none',
+      //   secure: true,
+      // })
       .status(200)
-      .send(token); // Sending user details without password
+      .send({
+        jwt: token,
+        message: 'Login Success'
+      }); // Sending user details without password
   } catch (error) {
     next(error);
   }
