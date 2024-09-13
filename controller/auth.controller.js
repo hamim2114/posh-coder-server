@@ -152,7 +152,11 @@ export const getUsers = async (req, res, next) => {
 export const getUser = async (req,res,next) => {
   try {
     const user = await authModel.findById(req.params.id);
-    res.status(201).send(user);
+    const userOrders = await orderModel.find({userId: req.params.id})
+    res.status(201).send({
+      ...user.toObject(),
+      userOrders
+    });
   } catch (error) {
     next(error)
   }
